@@ -2,8 +2,11 @@ services:
   - type: web
     name: clawwork-dashboard
     env: python
-    buildCommand: pip install -r requirements.txt && cd frontend && npm install && npm run build && cd ..
-    startCommand: python livebench/main.py --dashboard
+    buildCommand: |
+      pip install -r requirements.txt
+      pip install uvicorn fastapi python-dotenv
+      cd frontend && npm install && npm run build && cd ..
+    startCommand: uvicorn livebench.api.server:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: GOOGLE_API_KEY
         value: AIzaSyAQsAPssodgLpinMSx-TFtpfpYpn7byfxs
@@ -15,5 +18,7 @@ services:
         value: AIzaSyAQsAPssodgLpinMSx-TFtpfpYpn7byfxs
       - key: EVALUATION_API_BASE
         value: https://generativelanguage.googleapis.com/v1beta/openai/
-      - key: PORT
-        value: 10000
+      - key: CLAWWORK_CONFIG
+        value: livebench/configs/pantheon_gemini_free.json
+      - key: CODE_SANDBOX_PROVIDER
+        value: none
