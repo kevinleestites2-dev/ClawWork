@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: clawwork-dashboard
+    env: python
+    buildCommand: pip install -r requirements.txt && cd frontend && npm install && npm run build && cd ..
+    startCommand: python livebench/main.py --dashboard
+    envVars:
+      - key: GOOGLE_API_KEY
+        value: AIzaSyAQsAPssodgLpinMSx-TFtpfpYpn7byfxs
+      - key: OPENAI_API_KEY
+        value: placeholder
+      - key: OPENAI_API_BASE
+        value: https://generativelanguage.googleapis.com/v1beta/openai/
+      - key: EVALUATION_API_KEY
+        value: AIzaSyAQsAPssodgLpinMSx-TFtpfpYpn7byfxs
+      - key: EVALUATION_API_BASE
+        value: https://generativelanguage.googleapis.com/v1beta/openai/
+      - key: PORT
+        value: 10000
